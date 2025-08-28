@@ -9,7 +9,7 @@ import com.maqfiltros.sensors_contract.entities.Equipamento;
 import com.maqfiltros.sensors_contract.interfaces.consultas.EquipamentoResumido;
 
 public interface EquipamentoRepositoryGeneric<T extends Equipamento> extends JpaRepository<T, Long> {
-	List<T> findByClienteId(Long clienteId);
+	List<T> findByEscolaId(Long clienteId);
 
 	@Query("SELECT e FROM Equipamento e")
 	List<T> findAllSemLeituras();
@@ -18,7 +18,7 @@ public interface EquipamentoRepositoryGeneric<T extends Equipamento> extends Jpa
 	 * @Query(""" SELECT e.id AS id, e.cliente.id AS clienteId, TYPE(e) AS tipo FROM
 	 * Equipamento e """) List<EquipamentoResumido> findResumoEquipamentos();
 	 */
-	@Query(value = "SELECT e.id, e.cliente_id AS clienteId, e.tipo_equipamento AS tipo FROM equipamento e", nativeQuery = true)
+	@Query(value = "SELECT e.id, e.escola_id AS escolaId, e.tipo_equipamento AS tipo FROM equipamento e", nativeQuery = true)
 	List<EquipamentoResumido> findResumoEquipamentos();
 
 }

@@ -18,8 +18,8 @@ public class EquipamentoService {
 		this.equipamentoRepository = equipamentoRepository;
 	}
 
-	public List<Equipamento> buscarPorCliente(Long clienteId) {
-		return equipamentoRepository.findByClienteId(clienteId);
+	public List<Equipamento> buscarPorEscola(Long escolaId) {
+		return equipamentoRepository.findByEscolaId(escolaId);
 	}
 
 	public Equipamento findByIdComLeituras(Long id) {

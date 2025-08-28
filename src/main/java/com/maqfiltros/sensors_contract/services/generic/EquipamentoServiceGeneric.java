@@ -27,8 +27,8 @@ public abstract class EquipamentoServiceGeneric<T extends Equipamento, R extends
 		return repository.findAll();
 	}
 
-	public List<T> findByClienteId(Long clienteId) {
-		return repository.findByClienteId(clienteId);
+	public List<T> findByEscolaId(Long escolaId) {
+		return repository.findByEscolaId(escolaId);
 	}
 
 	public T findById(Long id) {

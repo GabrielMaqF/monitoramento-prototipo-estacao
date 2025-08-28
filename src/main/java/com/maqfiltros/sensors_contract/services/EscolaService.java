@@ -8,34 +8,34 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
-import com.maqfiltros.sensors_contract.dto.ClienteDTO;
-import com.maqfiltros.sensors_contract.entities.Cliente;
-import com.maqfiltros.sensors_contract.repositorys.ClienteRepository;
+import com.maqfiltros.sensors_contract.dto.EscolaDTO;
+import com.maqfiltros.sensors_contract.entities.Escola;
+import com.maqfiltros.sensors_contract.repositorys.EscolaRepository;
 import com.maqfiltros.sensors_contract.resources.exceptions.DatabaseException;
 import com.maqfiltros.sensors_contract.services.exceptions.ResourceNotFoundException;
 
 @Service
-public class ClienteService {
+public class EscolaService {
 
 	@Autowired
-	private ClienteRepository repository;
+	private EscolaRepository repository;
 
-	public List<Cliente> findAll() {
+	public List<Escola> findAll() {
 		return repository.findAll();
 	}
 
-	public List<ClienteDTO> findAllDTO() {
-		List<Cliente> list = repository.findAll();
-		return list.stream().map(cliente -> new ClienteDTO(cliente.getId(), cliente.getNome(), cliente.getEndereco()))
+	public List<EscolaDTO> findAllDTO() {
+		List<Escola> list = repository.findAll();
+		return list.stream().map(cliente -> new EscolaDTO(cliente.getId(), cliente.getNome(), cliente.getEndereco()))
 				.toList();
 	}
 
-	public Cliente findById(Long id) {
-		Optional<Cliente> obj = repository.findById(id);
+	public Escola findById(Long id) {
+		Optional<Escola> obj = repository.findById(id);
 		return obj.get();
 	}
 
-	public Cliente insert(Cliente obj) {
+	public Escola insert(Escola obj) {
 		return repository.save(obj);
 	}
 
@@ -51,13 +51,13 @@ public class ClienteService {
 		}
 	}
 
-	public Cliente update(Long id, Cliente obj) {
-		Cliente entity = repository.getReferenceById(id);
+	public Escola update(Long id, Escola obj) {
+		Escola entity = repository.getReferenceById(id);
 		updateData(entity, obj);
 		return repository.save(entity);
 	}
 
-	private void updateData(Cliente entity, Cliente obj) {
+	private void updateData(Escola entity, Escola obj) {
 		entity.setNome(obj.getNome());
 		entity.setEndereco(obj.getEndereco());
 	}

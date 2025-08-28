@@ -5,19 +5,10 @@ import org.springframework.boot.CommandLineRunner;
 //@Configuration
 //@Profile("test")
 public class TestConfig implements CommandLineRunner{
-
-//	@Autowired
-//	private ClienteRepository clienteRepository;
-//	
-//	@Autowired
-//	private EquipamentoRepository equipamentoRepository;
-//
-//	@Autowired
-//	public LeituraRepository leituraRepository;
 	
 	@Override
 	public void run(String... args) throws Exception {	
-//		Cliente c1 = new Cliente(null, "Gabriel Sales", "Rua Marechal Andrea");
+//		Escola c1 = new Escola(null, "Gabriel Sales", "Rua Marechal Andrea");
 //		Hidrometro e3 = new Hidrometro((byte) 1, "HIDROMETER UJH2,5 DN2 - B22H018066", "Hidrometro de Testes", c1, 233);
 //		Hidrometro e4 = new Hidrometro((byte) 5, "WATER BOMBA", "HDR da BOMBA", c1, 0);
 //		
@@ -27,7 +18,7 @@ public class TestConfig implements CommandLineRunner{
 //		Leitura l4 = new Leitura(null, Instant.parse("2025-01-21T19:53:07Z"), "23", e4);
 //		Leitura l5 = new Leitura(null, Instant.parse("2025-01-23T19:53:07Z"), "49", e3);
 //
-//		Cliente c2 = new Cliente(null, "Sebastião Meneses", "Rua Rubem Berta");
+//		Escola c2 = new Escola(null, "Sebastião Meneses", "Rua Rubem Berta");
 //		Hidrometro e5 = new Hidrometro((byte) 1, "HIDROMETER SSLA", "Hidrometro de Testes", c2, 233);
 //		Hidrometro e6 = new Hidrometro((byte) 5, "FIBERGLAS 123", "HDR da BOMBA", c2, 0);
 //		

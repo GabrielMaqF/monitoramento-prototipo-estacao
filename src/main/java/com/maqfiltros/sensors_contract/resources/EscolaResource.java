@@ -15,37 +15,37 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import com.maqfiltros.sensors_contract.dto.ClienteDTO;
-import com.maqfiltros.sensors_contract.entities.Cliente;
-import com.maqfiltros.sensors_contract.services.ClienteService;
+import com.maqfiltros.sensors_contract.dto.EscolaDTO;
+import com.maqfiltros.sensors_contract.entities.Escola;
+import com.maqfiltros.sensors_contract.services.EscolaService;
 
 @RestController
-@RequestMapping(value = "/clientes")
-public class ClienteResource {
+@RequestMapping(value = "/escolas")
+public class EscolaResource {
 
 	@Autowired
-	private ClienteService service;
+	private EscolaService service;
 
 	@GetMapping
-	public ResponseEntity<List<Cliente>> findAll() {
-		List<Cliente> list = service.findAll();
+	public ResponseEntity<List<Escola>> findAll() {
+		List<Escola> list = service.findAll();
 		return ResponseEntity.ok().body(list);
 	}
 
 	@GetMapping("/simples")
-	public ResponseEntity<List<ClienteDTO>> findAllSimples() {
-		List<ClienteDTO> list = service.findAllDTO();
+	public ResponseEntity<List<EscolaDTO>> findAllSimples() {
+		List<EscolaDTO> list = service.findAllDTO();
 		return ResponseEntity.ok().body(list);
 	}
 
 	@GetMapping(value = "/{id}")
-	public ResponseEntity<Cliente> findById(@PathVariable Long id) {
-		Cliente obj = service.findById(id);
+	public ResponseEntity<Escola> findById(@PathVariable Long id) {
+		Escola obj = service.findById(id);
 		return ResponseEntity.ok().body(obj);
 	}
 
 	@PostMapping
-	public ResponseEntity<Cliente> insert(@RequestBody Cliente obj) {
+	public ResponseEntity<Escola> insert(@RequestBody Escola obj) {
 		obj = service.insert(obj);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
 		return ResponseEntity.created(uri).body(obj);
@@ -58,7 +58,7 @@ public class ClienteResource {
 	}
 
 	@PutMapping(value = "/{id}")
-	public ResponseEntity<Cliente> update(@PathVariable Long id, @RequestBody Cliente obj) {
+	public ResponseEntity<Escola> update(@PathVariable Long id, @RequestBody Escola obj) {
 		obj = service.update(id, obj);
 		return ResponseEntity.ok().body(obj);
 	}

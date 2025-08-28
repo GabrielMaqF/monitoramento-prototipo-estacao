@@ -30,23 +30,22 @@ public class Hidrometro extends Equipamento {
 //		setTipo(tipoEquipamento);
 	}
 
-	public Hidrometro(byte pulsosPorLitro, String modelo, String descricao, Cliente cliente) {
-		super(null, modelo, descricao, cliente);
+	public Hidrometro(byte pulsosPorLitro, String modelo, String descricao, Escola escola) {
+		super(null, modelo, descricao, escola);
 //		setTipo(tipoEquipamento);
 		this.pulsosPorLitro = pulsosPorLitro;
 	}
 
-	public Hidrometro(byte pulsosPorLitro, String modelo, String descricao, Cliente cliente,
-			long contadorInicialLitros) {
-		super(null, modelo, descricao, cliente);
+	public Hidrometro(byte pulsosPorLitro, String modelo, String descricao, Escola escola, long contadorInicialLitros) {
+		super(null, modelo, descricao, escola);
 //		setTipo(tipoEquipamento);
 		this.pulsosPorLitro = pulsosPorLitro;
 		this.setContadorInicialLitros(contadorInicialLitros);
 	}
 
-	public Hidrometro(byte pulsosPorLitro, String modelo, String descricao, Cliente cliente, long contadorInicialLitros,
+	public Hidrometro(byte pulsosPorLitro, String modelo, String descricao, Escola escola, long contadorInicialLitros,
 			long producaoLitrosAlvoMes, double vazaoSistema) {
-		super(null, modelo, descricao, cliente);
+		super(null, modelo, descricao, escola);
 //		setTipo(tipoEquipamento);
 		this.pulsosPorLitro = pulsosPorLitro;
 		this.setContadorInicialLitros(contadorInicialLitros);

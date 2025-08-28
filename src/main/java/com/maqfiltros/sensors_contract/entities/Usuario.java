@@ -26,9 +26,9 @@ public class Usuario {
 
 	@Column(nullable = false)
 	private String username, password;
-	
+
 	@OneToMany(fetch = FetchType.EAGER)
-	private Cliente cliente;
+	private Escola escola;
 
 	@Column(nullable = false)
 	private boolean ativo;

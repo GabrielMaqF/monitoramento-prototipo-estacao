@@ -23,18 +23,18 @@ public class EquipamentoResource {
         this.equipamentoService = equipamentoService;
     }
 
-    @GetMapping("/cliente/com-leituras/{clienteId}")
-    public ResponseEntity<?> listarPorClienteComOpcionalELeituras(@PathVariable Long clienteId, @RequestParam(value = "tm", required = false) String tm) {
-        List<Equipamento> equipamentos = equipamentoService.buscarPorCliente(clienteId);
+    @GetMapping("/escola/com-leituras/{escolaId}")
+    public ResponseEntity<?> listarPorEscolaComOpcionalELeituras(@PathVariable Long escolaId, @RequestParam(value = "tm", required = false) String tm) {
+        List<Equipamento> equipamentos = equipamentoService.buscarPorEscola(escolaId);
         List<EquipamentoDTO> resultado = equipamentos.stream()
                 .map(e -> new EquipamentoDTO(e, tm, true))
                 .toList();
         return ResponseEntity.ok(resultado);
     }
     
-    @GetMapping("/cliente/{clienteId}")
-    public ResponseEntity<?> listarPorCliente(@PathVariable Long clienteId) {
-        List<Equipamento> equipamentos = equipamentoService.buscarPorCliente(clienteId);
+    @GetMapping("/escola/{escolaId}")
+    public ResponseEntity<?> listarPorEscola(@PathVariable Long escolaId) {
+        List<Equipamento> equipamentos = equipamentoService.buscarPorEscola(escolaId);
         List<EquipamentoDTO> resultado = equipamentos.stream()
                 .map(e -> new EquipamentoDTO(e))
                 .toList();

@@ -19,7 +19,7 @@ public class WhatsappService {
 	private TokenWhatsapp tokenWhatsapp;
 
 	@Async("taskExecutor")
-	public CompletableFuture<String> sendAlertBaixaVazao(String telefone, String nomeCliente, String situacao) {
+	public CompletableFuture<String> sendAlertBaixaVazao(String telefone, String nomeEscola, String situacao) {
 		telefone = formatTelefone(telefone);
 
 		if (telefone == null || telefone == "") {
@@ -66,7 +66,7 @@ public class WhatsappService {
 				        ]
 				    }
 				}
-				""", telefone, nomeCliente, nomeCliente, situacao);
+				""", telefone, nomeEscola, nomeEscola, situacao);
 
 		HttpRequest request = HttpRequest.newBuilder().uri(URI.create(url)).header("Authorization", authorization)
 				.header("Content-Type", "application/json").POST(HttpRequest.BodyPublishers.ofString(jsonBody)).build();
