@@ -9,33 +9,54 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-import com.maqfiltros.sensors_contract.security.JwtAuthFilter;
+import com.maqfiltros.sensors_contract.security.ApiKeyAuthFilter;
 
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity(prePostEnabled = true)
 public class SecurityConfig {
 
-	private final JwtAuthFilter jwtAuthFilter;
+	private final ApiKeyAuthFilter apiKeyAuthFilter;
 
-	public SecurityConfig(JwtAuthFilter jwtAuthFilter) {
-		this.jwtAuthFilter = jwtAuthFilter;
+	public SecurityConfig(ApiKeyAuthFilter apiKeyAuthFilter) {
+		this.apiKeyAuthFilter = apiKeyAuthFilter;
 	}
 
 	@Bean
-	SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 		http.csrf(csrf -> csrf.disable())
 				.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 				.authorizeHttpRequests(auth -> auth
-						// Defina aqui suas rotas públicas
-						.requestMatchers("/sse/subscribe", "/public/**").permitAll()
-						// Defina aqui as permissões para rotas específicas
-						.requestMatchers("/escolas/**").hasRole("ADMINISTRADOR").requestMatchers("/hidrometros/**")
-						.hasAnyRole("ADMINISTRADOR", "SUPERVISOR_CONTRATANTE")
-						// Todas as outras rotas precisam de autenticação
+						// Rotas públicas que não precisam de chave
+						.requestMatchers("/sse/subscribe").permitAll()
+						// Todas as outras rotas precisam de autenticação (e serão validadas pelo nosso
+						// filtro)
 						.anyRequest().authenticated())
-				.addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
+				// Adiciona nosso filtro de API Key antes do filtro padrão de autenticação
+				.addFilterBefore(apiKeyAuthFilter, UsernamePasswordAuthenticationFilter.class);
 
 		return http.build();
 	}
+//	private final JwtAuthFilter jwtAuthFilter;
+//
+//	public SecurityConfig(JwtAuthFilter jwtAuthFilter) {
+//		this.jwtAuthFilter = jwtAuthFilter;
+//	}
+//
+//	@Bean
+//	SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+//		http.csrf(csrf -> csrf.disable())
+//				.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+//				.authorizeHttpRequests(auth -> auth
+//						// Defina aqui suas rotas públicas
+//						.requestMatchers("/sse/subscribe", "/public/**").permitAll()
+//						// Defina aqui as permissões para rotas específicas
+//						.requestMatchers("/escolas/**").hasRole("ADMINISTRADOR").requestMatchers("/hidrometros/**")
+//						.hasAnyRole("ADMINISTRADOR", "SUPERVISOR_CONTRATANTE")
+//						// Todas as outras rotas precisam de autenticação
+//						.anyRequest().authenticated())
+//				.addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
+//
+//		return http.build();
+//	}
 }

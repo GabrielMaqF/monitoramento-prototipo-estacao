@@ -7,11 +7,22 @@ import com.maqfiltros.sensors_contract.entities.Equipamento;
 import com.maqfiltros.sensors_contract.entities.Hidrometro;
 import com.maqfiltros.sensors_contract.entities.Leitura;
 
+import lombok.Getter;
+import lombok.Setter;
+
 @JsonInclude(JsonInclude.Include.NON_NULL)
+@Getter
+@Setter
 public class LeituraDTO {
 	private Long id;
 	private Instant moment;
 	private Double valor;
+
+	public LeituraDTO(Long id, Instant moment, Double valor) {
+		this.id = id;
+		this.moment = moment;
+		this.valor = valor;
+	}
 
 	public LeituraDTO(Leitura leitura, Equipamento equipamento) {
 		this.id = leitura.getId();
@@ -33,7 +44,7 @@ public class LeituraDTO {
 		this.moment = leitura.getMoment();
 		this.valor = Double.valueOf(leitura.getValor());
 	}
-	
+
 	public LeituraDTO(LeituraPorMinutoDTO leitura) {
 		this.moment = leitura.getMoment();
 		this.valor = leitura.getValor();
@@ -47,27 +58,4 @@ public class LeituraDTO {
 		return (valor * pulsoPorLitro) / 1000.0;
 	}
 
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public Instant getMoment() {
-		return moment;
-	}
-
-	public void setMoment(Instant moment) {
-		this.moment = moment;
-	}
-
-	public Double getValor() {
-		return valor;
-	}
-
-	public void setValor(Double valor) {
-		this.valor = valor;
-	}
 }

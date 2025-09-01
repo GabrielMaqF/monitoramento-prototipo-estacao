@@ -122,14 +122,14 @@ public class Hidrometro extends Equipamento {
 		// Ex: (50 L/min * 1000) / (60 seg * 10 pulsos/L) = 83.3 pulsos/seg -> ajuste o
 		// cálculo se necessário
 		// O cálculo original parece converter vazão para pulsos por minuto.
-		double pulsosMaximosPorMinuto = Math.ceil((this.vazaoSistema * 1000) / (60.0 * this.getPulsosPorLitro()));
-
-		if (pulsosRecebidos >= 0 && (pulsosRecebidos <= pulsosMaximosPorMinuto || vazaoSistema == 0.0)) {
+//		double pulsosMaximosPorMinuto = Math.ceil((this.vazaoSistema * 1000) / (60.0 * this.getPulsosPorLitro()));
+//
+//		if (pulsosRecebidos >= 0 && (pulsosRecebidos <= pulsosMaximosPorMinuto || vazaoSistema == 0.0)) {
 			this.addPulso(pulsosRecebidos); // Mude o nome de addLitro para addPulso para maior clareza
 			return true;
-		}
-
-		return false;
+//		}
+//
+//		return false;
 	}
 
 	// Renomeie 'addLitro' para 'addPulso' para refletir o que ele realmente faz
