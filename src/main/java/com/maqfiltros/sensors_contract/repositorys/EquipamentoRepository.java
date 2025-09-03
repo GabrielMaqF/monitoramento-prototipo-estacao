@@ -1,0 +1,9 @@
+package com.maqfiltros.sensors_contract.repositorys;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import com.maqfiltros.sensors_contract.entities.Equipamento;
+
+public interface EquipamentoRepository extends JpaRepository<Equipamento, Long>{
+
+}

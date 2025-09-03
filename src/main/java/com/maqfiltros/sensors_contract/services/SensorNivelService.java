@@ -24,7 +24,7 @@ public class SensorNivelService extends SensorServiceGeneric<SensorNivel, Sensor
 		// TODO Auto-generated method stub
 //		entity.setQntTotalLitros(obj.getQntTotalLitros());
 //		entity.setPulsosPorLitro(obj.getPulsosPorLitro());
-		entity.setModelo(obj.getModelo());
+//		entity.setModelo(obj.getModelo());
 		entity.setDescricao(obj.getDescricao());
 	}
 

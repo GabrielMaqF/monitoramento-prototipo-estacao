@@ -21,8 +21,8 @@ public class SensorCorrente extends Sensor {
 	private Double correnteDeFuncionamento;
 
 	// Construtor personalizado
-	public SensorCorrente(String modelo, String descricao, Escola escola, Double correnteDeFuncionamento) {
-		super(null, modelo, descricao, escola);
+	public SensorCorrente(String descricao, Equipamento equipamento, Double correnteDeFuncionamento) {
+		super(null, descricao, equipamento);
 		this.correnteDeFuncionamento = correnteDeFuncionamento;
 	}
 

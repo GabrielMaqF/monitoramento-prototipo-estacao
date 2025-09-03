@@ -27,8 +27,8 @@ public abstract class SensorServiceGeneric<T extends Sensor, R extends SensorRep
 		return repository.findAll();
 	}
 
-	public List<T> findByEscolaId(Long escolaId) {
-		return repository.findByEscolaId(escolaId);
+	public List<T> findByEquipamentoId(Long equipamentoId) {
+		return repository.findByEquipamentoId(equipamentoId);
 	}
 
 	public T findById(Long id) {

@@ -9,16 +9,16 @@ import com.maqfiltros.sensors_contract.entities.Sensor;
 import com.maqfiltros.sensors_contract.interfaces.consultas.SensorResumido;
 
 public interface SensorRepositoryGeneric<T extends Sensor> extends JpaRepository<T, Long> {
-	List<T> findByEscolaId(Long clienteId);
+	List<T> findByEquipamentoId(Long clienteId);
 
-	@Query("SELECT e FROM Equipamento e")
+	@Query("SELECT s FROM Sensor s")
 	List<T> findAllSemLeituras();
 
 	/*
 	 * @Query(""" SELECT e.id AS id, e.cliente.id AS clienteId, TYPE(e) AS tipo FROM
 	 * Equipamento e """) List<EquipamentoResumido> findResumoEquipamentos();
 	 */
-	@Query(value = "SELECT s.id, s.escola_id AS escolaId, s.tipo_sensor AS tipo FROM sensor s", nativeQuery = true)
+	@Query(value = "SELECT s.id, s.equipamento_id AS equipamentoId, s.tipo_sensor AS tipo FROM sensor s", nativeQuery = true)
 	List<SensorResumido> findResumoSensores();
 
 }

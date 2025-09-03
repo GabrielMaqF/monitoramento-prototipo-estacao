@@ -28,7 +28,7 @@ public class Escola implements Serializable {
 //	@JsonIgnore
 	@JsonInclude(JsonInclude.Include.NON_NULL)
 	@OneToMany(mappedBy = "escola") // , cascade = CascadeType.ALL
-	private List<Sensor> sensores;
+	private List<Equipamento> sensores;
 
 	public Escola(Long id, String nome, String endereco) {
 		super();

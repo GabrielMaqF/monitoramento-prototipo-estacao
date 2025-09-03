@@ -35,8 +35,8 @@ public class Hidrometro extends Sensor {
 	private Double percentualMinimoVazao = 0.7;
 
 	// Construtor personalizado que chama o construtor da superclasse
-	public Hidrometro(String modelo, String descricao, Escola escola, byte pulsosPorLitro, Long contadorInicialLitros) {
-		super(null, modelo, descricao, escola); // Respeita o DIP
+	public Hidrometro(String descricao, Equipamento equipamento, byte pulsosPorLitro, Long contadorInicialLitros) {
+		super(null, descricao, equipamento); // Respeita o DIP
 		this.pulsosPorLitro = pulsosPorLitro;
 		this.contadorInicialLitros = contadorInicialLitros;
 	}

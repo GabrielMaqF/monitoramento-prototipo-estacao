@@ -1,0 +1,30 @@
+package com.maqfiltros.sensors_contract.services;
+
+import java.util.List;
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.maqfiltros.sensors_contract.entities.Equipamento;
+import com.maqfiltros.sensors_contract.repositorys.EquipamentoRepository;
+
+@Service
+public class EquipamentoService {
+	@Autowired
+	private EquipamentoRepository repository;
+
+	public List<Equipamento> findAll() {
+		return repository.findAll();
+	}
+
+	public Equipamento findById(Long id) {
+		Optional<Equipamento> obj = repository.findById(id);
+		return obj.get();
+	}
+
+	public Equipamento insert(Equipamento obj) {
+		return repository.save(obj);
+	}
+
+}

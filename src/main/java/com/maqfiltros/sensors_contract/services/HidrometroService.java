@@ -23,7 +23,7 @@ public class HidrometroService extends SensorServiceGeneric<Hidrometro, Hidromet
 	protected void updateData(Hidrometro entity, Hidrometro obj) {
 		entity.setQntTotalLitros(obj.getQntTotalLitros());
 		entity.setPulsosPorLitro(obj.getPulsosPorLitro());
-		entity.setModelo(obj.getModelo());
+//		entity.setModelo(obj.getModelo());
 		entity.setDescricao(obj.getDescricao());
 	}
 

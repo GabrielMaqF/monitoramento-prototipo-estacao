@@ -27,10 +27,10 @@ public class SensorNivel extends Sensor {
 	private TipoReservatorio tipoReservatorio;
 
 	// Construtor personalizado
-	public SensorNivel(String modelo, String descricao, Escola escola, Double alturaTotalReservatorioCm,
+	public SensorNivel(String descricao, Equipamento equipamento, Double alturaTotalReservatorioCm,
 			Double alturaSensorCm, Double medida1, Double medida2, Double capacidade,
 			TipoReservatorio tipoReservatorio) {
-		super(null, modelo, descricao, escola);
+		super(null, descricao, equipamento);
 		this.alturaTotalReservatorioCm = alturaTotalReservatorioCm;
 		this.alturaSensorCm = alturaSensorCm;
 		this.medida1 = medida1;

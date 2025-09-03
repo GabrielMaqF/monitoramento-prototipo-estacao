@@ -3,7 +3,6 @@ package com.maqfiltros.sensors_contract.entities;
 import java.io.Serializable;
 import java.util.List;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.maqfiltros.sensors_contract.enums.TipoSensor;
 
@@ -31,7 +30,7 @@ import lombok.ToString;
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "tipoSensor")
 @Getter
 @Setter
-@ToString(exclude = { "escola", "leituras" }) // Evita recursão no toString
+@ToString(exclude = { "equipamento", "leituras" }) // Evita recursão no toString
 @EqualsAndHashCode(callSuper = false, of = { "id" }) // Compara entidades apenas pelo ID
 @NoArgsConstructor
 public abstract class Sensor implements Serializable {
@@ -40,24 +39,44 @@ public abstract class Sensor implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	private String marca, modelo, descricao;
+	private String descricao;
 
-	@JsonIgnore
+//	@JsonIgnore
+//	@ManyToOne
+//	@JoinColumn(name = "escola_id")
+//	public Escola escola;
+	
 	@ManyToOne
-	@JoinColumn(name = "escola_id")
-	public Escola escola;
+	@JoinColumn(name = "equipamento_id")
+	private Equipamento equipamento;
 
 	@OneToMany(mappedBy = "sensor") // , cascade = CascadeType.ALL
 	@OrderBy("moment ASC")
 	private List<Leitura> leituras;
 
-	protected Sensor(Long id, String modelo, String descricao, Escola escola) {
-		super();
+//	protected Sensor(Long id, String modelo, String descricao, Escola escola) {
+//		super();
+//		this.id = id;
+////		this.tipo = tipo;
+//		this.modelo = modelo;
+//		this.descricao = descricao;
+//		this.escola = escola;
+//	}
+//	protected Sensor(Long id, String marca, String modelo, String descricao, Escola escola) {
+//		super();
+//		this.id = id;
+	////		this.tipo = tipo;
+//		this.marca = marca;
+//		this.modelo = modelo;
+//		this.descricao = descricao;
+//		this.escola = escola;
+//	}
+	protected Sensor(Long id, String descricao, Equipamento equipamento) {//, Escola escola
+//		super();
 		this.id = id;
-//		this.tipo = tipo;
-		this.modelo = modelo;
 		this.descricao = descricao;
-		this.escola = escola;
+		this.equipamento = equipamento;
+//		this.escola = escola;
 	}
 
 	public abstract TipoSensor getTipoSensor();

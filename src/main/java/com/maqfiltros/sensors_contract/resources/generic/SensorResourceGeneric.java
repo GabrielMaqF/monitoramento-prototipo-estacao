@@ -13,10 +13,10 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import com.maqfiltros.sensors_contract.entities.Escola;
+import com.maqfiltros.sensors_contract.entities.Equipamento;
 import com.maqfiltros.sensors_contract.entities.Sensor;
 import com.maqfiltros.sensors_contract.enums.TipoSensor;
-import com.maqfiltros.sensors_contract.services.EscolaService;
+import com.maqfiltros.sensors_contract.services.EquipamentoService;
 import com.maqfiltros.sensors_contract.services.generic.SensorServiceFactory;
 import com.maqfiltros.sensors_contract.services.generic.SensorServiceGeneric;
 
@@ -26,7 +26,7 @@ public abstract class SensorResourceGeneric<T extends Sensor> {
 	private SensorServiceFactory serviceFactory;
 
 	@Autowired
-	private EscolaService escolaService;
+	private EquipamentoService equipamentoService;
 
 	@GetMapping
 	public ResponseEntity<List<T>> findAll() {
@@ -34,9 +34,9 @@ public abstract class SensorResourceGeneric<T extends Sensor> {
 		return ResponseEntity.ok().body(list);
 	}
 
-	@GetMapping("/escola/{escolaId}")
-	public ResponseEntity<List<T>> findByEscolaId(@PathVariable Long escolaId) {
-		List<T> equipamentos = getService().findByEscolaId(escolaId);
+	@GetMapping("/equipamento/{equipamentoId}")
+	public ResponseEntity<List<T>> findByEquipamentoId(@PathVariable Long equipamentoId) {
+		List<T> equipamentos = getService().findByEquipamentoId(equipamentoId);
 		return ResponseEntity.ok().body(equipamentos);
 	}
 
@@ -46,14 +46,14 @@ public abstract class SensorResourceGeneric<T extends Sensor> {
 		return ResponseEntity.ok().body(obj);
 	}
 
-	@PostMapping(value = "/{id_escola}")
-	public ResponseEntity<T> insert(@PathVariable Long id_escola, @RequestBody T obj) {
+	@PostMapping(value = "/{id_equipamento}")
+	public ResponseEntity<T> insert(@PathVariable Long id_equipamento, @RequestBody T obj) {
 		TipoSensor tipo = obj.getTipoSensor();
 		@SuppressWarnings("unchecked")
 		SensorServiceGeneric<T, ?> service = (SensorServiceGeneric<T, ?>) serviceFactory.getService(tipo);
 
-		Escola escola = escolaService.findById(id_escola);
-		obj.setEscola(escola);
+		Equipamento equipamento = equipamentoService.findById(id_equipamento);
+		obj.setEquipamento(equipamento);
 
 		obj = service.insert(obj);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
