@@ -15,8 +15,9 @@ import lombok.Setter;
 @Setter
 public class ApiGenericConfig {
 	private String key;
-@PostConstruct
-public void init() {
-    System.out.println("urlToken: " + key);
-}
+
+	@PostConstruct
+	public void init() {
+		System.out.println("urlToken: " + key);
+	}
 }

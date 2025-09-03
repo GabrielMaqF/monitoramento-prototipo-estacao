@@ -3,14 +3,14 @@ package com.maqfiltros.sensors_contract.services;
 import org.springframework.stereotype.Service;
 
 import com.maqfiltros.sensors_contract.entities.SensorNivel;
-import com.maqfiltros.sensors_contract.enums.TipoEquipamento;
+import com.maqfiltros.sensors_contract.enums.TipoSensor;
 import com.maqfiltros.sensors_contract.repositorys.SensorNivelRepository;
 import com.maqfiltros.sensors_contract.services.exceptions.ResourceNotFoundException;
-import com.maqfiltros.sensors_contract.services.generic.EquipamentoServiceGeneric;
+import com.maqfiltros.sensors_contract.services.generic.SensorServiceGeneric;
 
 //@Service
 @Service("sensorNivelService")
-public class SensorNivelService extends EquipamentoServiceGeneric<SensorNivel, SensorNivelRepository> {
+public class SensorNivelService extends SensorServiceGeneric<SensorNivel, SensorNivelRepository> {
 
 	@Override
 	public SensorNivel updateLeitura(Long id, SensorNivel obj) {
@@ -29,7 +29,7 @@ public class SensorNivelService extends EquipamentoServiceGeneric<SensorNivel, S
 	}
 
 	@Override
-	public TipoEquipamento getTipoEquipamento() {
-		return TipoEquipamento.SensorNivel;
+	public TipoSensor getTipoSensor() {
+		return TipoSensor.SensorNivel;
 	}
 }

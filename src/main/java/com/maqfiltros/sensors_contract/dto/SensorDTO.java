@@ -9,17 +9,17 @@ import java.util.stream.Collectors;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.maqfiltros.sensors_contract.dto.leitura.LeituraDTO;
-import com.maqfiltros.sensors_contract.entities.Equipamento;
 import com.maqfiltros.sensors_contract.entities.Hidrometro;
+import com.maqfiltros.sensors_contract.entities.Sensor;
 import com.maqfiltros.sensors_contract.entities.SensorNivel;
-import com.maqfiltros.sensors_contract.enums.TipoEquipamento;
+import com.maqfiltros.sensors_contract.enums.TipoSensor;
 import com.maqfiltros.sensors_contract.resources.exceptions.DatabaseException;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class EquipamentoDTO {
+public class SensorDTO {
 	private Long id;
 	private String descricao;
-	private TipoEquipamento tipo;
+	private TipoSensor tipo;
 	private List<LeituraDTO> leituras;
 
 	// Hidrometro
@@ -30,19 +30,19 @@ public class EquipamentoDTO {
 
 	// Sensor Nivel
 	@JsonIgnore
-	private Double alturaTotalReservatorioCm, alturaEquipamentoCm, medida1, medida2, capacidade;
+	private Double alturaTotalReservatorioCm, alturaSensorCm, medida1, medida2, capacidade;
 
-	public EquipamentoDTO(Equipamento equipamento, String periodo, boolean isLeitura) {
-		this.id = equipamento.getId();
-		this.descricao = equipamento.getDescricao();
-		this.tipo = equipamento.getTipoEquipamento();
+	public SensorDTO(Sensor sensor, String periodo, boolean isLeitura) {
+		this.id = sensor.getId();
+		this.descricao = sensor.getDescricao();
+		this.tipo = sensor.getTipoSensor();
 
 		if (isLeitura) {
 			try {
 
 				if (periodo == null || periodo.isEmpty()) {
-					this.leituras = equipamento.getLeituras().stream()
-							.map(leitura -> new LeituraDTO(leitura, equipamento)).toList();
+					this.leituras = sensor.getLeituras().stream().map(leitura -> new LeituraDTO(leitura, sensor))
+							.toList();
 				} else {
 					ChronoUnit periodoUnidade;
 					switch (periodo) {
@@ -63,8 +63,8 @@ public class EquipamentoDTO {
 						throw new IllegalArgumentException("Unexpected value: " + periodo);
 					}
 
-					Map<Instant, Double> agrupado = equipamento.getLeituras().stream()
-							.map(leitura -> new LeituraDTO(leitura, equipamento))
+					Map<Instant, Double> agrupado = sensor.getLeituras().stream()
+							.map(leitura -> new LeituraDTO(leitura, sensor))
 							.collect(Collectors.groupingBy(leitura -> leitura.getMoment().truncatedTo(periodoUnidade),
 									Collectors.summingDouble(LeituraDTO::getValor)));
 
@@ -80,39 +80,39 @@ public class EquipamentoDTO {
 			}
 		}
 
-		definirEspecificos(equipamento);
+		definirEspecificos(sensor);
 
 	}
 
-	public EquipamentoDTO(Equipamento equipamento) {
-		this.id = equipamento.getId();
-		this.descricao = equipamento.getDescricao();
-		this.tipo = equipamento.getTipoEquipamento();
+	public SensorDTO(Sensor sensor) {
+		this.id = sensor.getId();
+		this.descricao = sensor.getDescricao();
+		this.tipo = sensor.getTipoSensor();
 //		this.leituras = equipamento.getLeituras().stream().map(l -> {
 //			return new LeituraDTO(l);
 //		}).toList();
-		definirEspecificos(equipamento);
+		definirEspecificos(sensor);
 
 	}
 
-	private void definirEspecificos(Equipamento equipamento) {
+	private void definirEspecificos(Sensor sensor) {
 		try {
 
 			switch (this.tipo) {
 			case Hidrometro: {
-				this.total_metros_cubicos = (((Hidrometro) equipamento).getQntTotalLitros() / 1000);
-				this.vazaoSistema = ((Hidrometro) equipamento).getVazaoSistema();
-				this.producaoLitrosAlvoMes = ((Hidrometro) equipamento).getProducaoLitrosAlvoMes();
-				this.percentualMinimoVazao = ((Hidrometro) equipamento).getPercentualMinimoVazao();
+				this.total_metros_cubicos = (((Hidrometro) sensor).getQntTotalLitros() / 1000);
+				this.vazaoSistema = ((Hidrometro) sensor).getVazaoSistema();
+				this.producaoLitrosAlvoMes = ((Hidrometro) sensor).getProducaoLitrosAlvoMes();
+				this.percentualMinimoVazao = ((Hidrometro) sensor).getPercentualMinimoVazao();
 				break;
 			}
 
 			case SensorNivel: {
-				this.alturaTotalReservatorioCm = (((SensorNivel) equipamento).getAlturaTotalReservatorioCm());
-				this.alturaEquipamentoCm = (((SensorNivel) equipamento).getAlturaEquipamentoCm());
-				this.medida1 = (((SensorNivel) equipamento).getMedida1());
-				this.medida2 = (((SensorNivel) equipamento).getMedida2());
-				this.capacidade = (((SensorNivel) equipamento).getCapacidade());
+				this.alturaTotalReservatorioCm = (((SensorNivel) sensor).getAlturaTotalReservatorioCm());
+				this.alturaSensorCm = (((SensorNivel) sensor).getAlturaSensorCm());
+				this.medida1 = (((SensorNivel) sensor).getMedida1());
+				this.medida2 = (((SensorNivel) sensor).getMedida2());
+				this.capacidade = (((SensorNivel) sensor).getCapacidade());
 				break;
 			}
 
@@ -157,11 +157,11 @@ public class EquipamentoDTO {
 		this.total_metros_cubicos = total_metros_cubicos;
 	}
 
-	public TipoEquipamento getTipo() {
+	public TipoSensor getTipo() {
 		return tipo;
 	}
 
-	public void setTipo(TipoEquipamento tipo) {
+	public void setTipo(TipoSensor tipo) {
 		this.tipo = tipo;
 	}
 
@@ -189,12 +189,12 @@ public class EquipamentoDTO {
 		this.alturaTotalReservatorioCm = alturaTotalReservatorioCm;
 	}
 
-	public Double getAlturaEquipamentoCm() {
-		return alturaEquipamentoCm;
+	public Double getAlturaSensorCm() {
+		return alturaSensorCm;
 	}
 
-	public void setAlturaEquipamentoCm(Double alturaEquipamentoCm) {
-		this.alturaEquipamentoCm = alturaEquipamentoCm;
+	public void setAlturaSensorCm(Double alturaSensorCm) {
+		this.alturaSensorCm = alturaSensorCm;
 	}
 
 	public Double getMedida1() {

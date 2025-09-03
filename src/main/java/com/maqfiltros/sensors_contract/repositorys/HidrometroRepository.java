@@ -3,10 +3,10 @@ package com.maqfiltros.sensors_contract.repositorys;
 import org.springframework.stereotype.Repository;
 
 import com.maqfiltros.sensors_contract.entities.Hidrometro;
-import com.maqfiltros.sensors_contract.repositorys.generic.EquipamentoRepositoryGeneric;
+import com.maqfiltros.sensors_contract.repositorys.generic.SensorRepositoryGeneric;
 
 @Repository
-public interface HidrometroRepository extends EquipamentoRepositoryGeneric<Hidrometro> {
+public interface HidrometroRepository extends SensorRepositoryGeneric<Hidrometro> {
 }
 
 /*

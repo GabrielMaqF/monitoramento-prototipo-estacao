@@ -16,14 +16,14 @@ public interface LeituraRepository extends JpaRepository<Leitura, Long> {
 			    date_trunc('minute', l.moment) AS minuto,
 			    (SUM(l.valor::numeric) * h.pulsos_por_litro / 1000)::double precision AS valor
 			FROM leitura l
-			JOIN equipamento e ON l.equipamento_id = e.id
+			JOIN sensor e ON l.sensor_id = e.id
 			JOIN hidrometro h ON h.id = e.id
 			WHERE l.moment >= now() - CAST(:intervalo AS interval)
-			  AND l.equipamento_id = :idEquipamento
+			  AND l.sensor_id = :idSensor
 			GROUP BY minuto, h.pulsos_por_litro
 			ORDER BY minuto
 			""", nativeQuery = true)
-	List<LeituraPorMinutoDTO> buscarLeiturasHidrometroPorIntervalo(@Param("idEquipamento") Long idEquipamento,
+	List<LeituraPorMinutoDTO> buscarLeiturasHidrometroPorIntervalo(@Param("idSensor") Long idSensor,
 			@Param("intervalo") String intervalo);
 
 	@Query(value = """
@@ -31,29 +31,29 @@ public interface LeituraRepository extends JpaRepository<Leitura, Long> {
 			    date_trunc('minute', l.moment) AS minuto,
 			    (SUM(l.valor::numeric) * h.pulsos_por_litro / 1000)::double precision AS valor
 			FROM leitura l
-			JOIN equipamento e ON l.equipamento_id = e.id
+			JOIN sensor e ON l.sensor_id = e.id
 			JOIN hidrometro h ON h.id = e.id
-			WHERE l.equipamento_id = :idEquipamento
+			WHERE l.sensor_id = :idSensor
 			GROUP BY minuto, h.pulsos_por_litro
 			ORDER BY minuto
 			""", nativeQuery = true)
-	List<LeituraPorMinutoDTO> buscarLeiturasTratadas(@Param("idEquipamento") Long idEquipamento);
+	List<LeituraPorMinutoDTO> buscarLeiturasTratadas(@Param("idSensor") Long idSensor);
 	
 	@Query(value = """
 		    SELECT
 		        date_trunc('minute', l.moment) AS minuto,
 		        (SUM(l.valor::numeric) * h.pulsos_por_litro / 1000)::double precision AS valor
 		    FROM leitura l
-		    JOIN equipamento e ON l.equipamento_id = e.id
+		    JOIN sensor e ON l.sensor_id = e.id
 		    JOIN hidrometro h ON h.id = e.id
-		    WHERE l.equipamento_id = :idEquipamento
+		    WHERE l.sensor_id = :idSensor
 		      AND l.moment >= :inicio
 		      AND l.moment < :fim
 		    GROUP BY minuto, h.pulsos_por_litro
 		    ORDER BY minuto
 		    """, nativeQuery = true)
 		List<LeituraPorMinutoDTO> buscarLeiturasPorDia(
-		    @Param("idEquipamento") Long idEquipamento,
+		    @Param("idSensor") Long idSensor,
 		    @Param("inicio") Instant inicio,
 		    @Param("fim") Instant fim
 		);
@@ -62,16 +62,16 @@ public interface LeituraRepository extends JpaRepository<Leitura, Long> {
 		        date_trunc('day', l.moment) AS minuto,
 		        (SUM(l.valor::numeric) * h.pulsos_por_litro / 1000)::double precision AS valor
 		    FROM leitura l
-		    JOIN equipamento e ON l.equipamento_id = e.id
+		    JOIN sensor e ON l.sensor_id = e.id
 		    JOIN hidrometro h ON h.id = e.id
-		    WHERE l.equipamento_id = :idEquipamento
+		    WHERE l.sensor_id = :idSensor
 		      AND l.moment >= :inicio
 		      AND l.moment < :fim
 		    GROUP BY minuto, h.pulsos_por_litro
 		    ORDER BY minuto
 		    """, nativeQuery = true)
 		List<LeituraPorMinutoDTO> buscarLeiturasAgrupadasPorDia(
-		    @Param("idEquipamento") Long idEquipamento,
+		    @Param("idSensor") Long idSensor,
 		    @Param("inicio") Instant inicio,
 		    @Param("fim") Instant fim
 		);
@@ -81,16 +81,16 @@ public interface LeituraRepository extends JpaRepository<Leitura, Long> {
 		        date_trunc('minute', l.moment) AS minuto,
 		        (SUM(l.valor::numeric) * h.pulsos_por_litro / 1000)::double precision AS valor
 		    FROM leitura l
-		    JOIN equipamento e ON l.equipamento_id = e.id
+		    JOIN sensor e ON l.sensor_id = e.id
 		    JOIN hidrometro h ON h.id = e.id
-		    WHERE l.equipamento_id = :idEquipamento
+		    WHERE l.sensor = :idSensor
 		      AND l.moment >= :inicio
 		      AND l.moment < :fim
 		    GROUP BY minuto, h.pulsos_por_litro
 		    ORDER BY minuto
 		    """, nativeQuery = true)
 		List<LeituraPorMinutoDTO> buscarLeiturasAgrupadasPorMinuto(
-		    @Param("idEquipamento") Long idEquipamento,
+		    @Param("idSensor") Long idSensor,
 		    @Param("inicio") Instant inicio,
 		    @Param("fim") Instant fim
 		);

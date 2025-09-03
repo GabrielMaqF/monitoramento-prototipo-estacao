@@ -13,17 +13,17 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import com.maqfiltros.sensors_contract.entities.Equipamento;
 import com.maqfiltros.sensors_contract.entities.Escola;
-import com.maqfiltros.sensors_contract.enums.TipoEquipamento;
+import com.maqfiltros.sensors_contract.entities.Sensor;
+import com.maqfiltros.sensors_contract.enums.TipoSensor;
 import com.maqfiltros.sensors_contract.services.EscolaService;
-import com.maqfiltros.sensors_contract.services.generic.EquipamentoServiceFactory;
-import com.maqfiltros.sensors_contract.services.generic.EquipamentoServiceGeneric;
+import com.maqfiltros.sensors_contract.services.generic.SensorServiceFactory;
+import com.maqfiltros.sensors_contract.services.generic.SensorServiceGeneric;
 
-public abstract class EquipamentoResourceGeneric<T extends Equipamento> {
+public abstract class SensorResourceGeneric<T extends Sensor> {
 
 	@Autowired
-	private EquipamentoServiceFactory serviceFactory;
+	private SensorServiceFactory serviceFactory;
 
 	@Autowired
 	private EscolaService escolaService;
@@ -48,9 +48,9 @@ public abstract class EquipamentoResourceGeneric<T extends Equipamento> {
 
 	@PostMapping(value = "/{id_escola}")
 	public ResponseEntity<T> insert(@PathVariable Long id_escola, @RequestBody T obj) {
-		TipoEquipamento tipo = obj.getTipoEquipamento();
+		TipoSensor tipo = obj.getTipoSensor();
 		@SuppressWarnings("unchecked")
-		EquipamentoServiceGeneric<T, ?> service = (EquipamentoServiceGeneric<T, ?>) serviceFactory.getService(tipo);
+		SensorServiceGeneric<T, ?> service = (SensorServiceGeneric<T, ?>) serviceFactory.getService(tipo);
 
 		Escola escola = escolaService.findById(id_escola);
 		obj.setEscola(escola);
@@ -65,15 +65,15 @@ public abstract class EquipamentoResourceGeneric<T extends Equipamento> {
 		getService().delete(id);
 		return ResponseEntity.noContent().build();
 	}
-	
+
 	@PutMapping(value = "/{id}")
 	public ResponseEntity<T> update(@PathVariable Long id, @RequestBody T obj) {
 		// Primeiro, obtemos o tipo do equipamento a partir do objeto recebido
-		TipoEquipamento tipo = obj.getTipoEquipamento();
+		TipoSensor tipo = obj.getTipoSensor();
 
 		// Usamos o factory para obter o serviço correto
 		@SuppressWarnings("unchecked")
-		EquipamentoServiceGeneric<T, ?> service = (EquipamentoServiceGeneric<T, ?>) serviceFactory.getService(tipo);
+		SensorServiceGeneric<T, ?> service = (SensorServiceGeneric<T, ?>) serviceFactory.getService(tipo);
 
 		// Chamamos o método no serviço específico
 		obj = service.update(id, obj);
@@ -81,9 +81,9 @@ public abstract class EquipamentoResourceGeneric<T extends Equipamento> {
 	}
 
 	@SuppressWarnings("unchecked")
-	private EquipamentoServiceGeneric<T, ?> getService() {
-		return (EquipamentoServiceGeneric<T, ?>) serviceFactory.getService(getTipo());
+	private SensorServiceGeneric<T, ?> getService() {
+		return (SensorServiceGeneric<T, ?>) serviceFactory.getService(getTipo());
 	}
 
-	protected abstract TipoEquipamento getTipo();
+	protected abstract TipoSensor getTipo();
 }

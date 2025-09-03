@@ -10,15 +10,15 @@ import org.springframework.dao.EmptyResultDataAccessException;
 //import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
-import com.maqfiltros.sensors_contract.entities.Equipamento;
-import com.maqfiltros.sensors_contract.enums.TipoEquipamento;
-import com.maqfiltros.sensors_contract.interfaces.consultas.EquipamentoResumido;
-import com.maqfiltros.sensors_contract.repositorys.generic.EquipamentoRepositoryGeneric;
+import com.maqfiltros.sensors_contract.entities.Sensor;
+import com.maqfiltros.sensors_contract.enums.TipoSensor;
+import com.maqfiltros.sensors_contract.interfaces.consultas.SensorResumido;
+import com.maqfiltros.sensors_contract.repositorys.generic.SensorRepositoryGeneric;
 import com.maqfiltros.sensors_contract.resources.exceptions.DatabaseException;
 import com.maqfiltros.sensors_contract.services.exceptions.ResourceNotFoundException;
 
 @Service
-public abstract class EquipamentoServiceGeneric<T extends Equipamento, R extends EquipamentoRepositoryGeneric<T>> {
+public abstract class SensorServiceGeneric<T extends Sensor, R extends SensorRepositoryGeneric<T>> {
 
 	@Autowired
 	protected R repository;
@@ -54,8 +54,8 @@ public abstract class EquipamentoServiceGeneric<T extends Equipamento, R extends
 		return repository.findAllSemLeituras();
 	}
 
-	public List<EquipamentoResumido> findEquipamentoResumido() {
-		return repository.findResumoEquipamentos();
+	public List<SensorResumido> findSensorResumido() {
+		return repository.findResumoSensores();
 	}
 
 	public T update(Long id, T obj) {
@@ -66,7 +66,7 @@ public abstract class EquipamentoServiceGeneric<T extends Equipamento, R extends
 
 	// Método abstrato para permitir que cada subclasse implemente sua lógica de
 	// atualização de leitura
-	public abstract TipoEquipamento getTipoEquipamento();
+	public abstract TipoSensor getTipoSensor();
 
 	public abstract T updateLeitura(Long id, T obj);
 

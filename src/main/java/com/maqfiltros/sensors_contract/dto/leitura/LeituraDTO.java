@@ -3,9 +3,9 @@ package com.maqfiltros.sensors_contract.dto.leitura;
 import java.time.Instant;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.maqfiltros.sensors_contract.entities.Equipamento;
 import com.maqfiltros.sensors_contract.entities.Hidrometro;
 import com.maqfiltros.sensors_contract.entities.Leitura;
+import com.maqfiltros.sensors_contract.entities.Sensor;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -24,18 +24,18 @@ public class LeituraDTO {
 		this.valor = valor;
 	}
 
-	public LeituraDTO(Leitura leitura, Equipamento equipamento) {
+	public LeituraDTO(Leitura leitura, Sensor sensor) {
 		this.id = leitura.getId();
 		this.moment = leitura.getMoment();
 
-		switch (equipamento.getTipoEquipamento()) {
+		switch (sensor.getTipoSensor()) {
 		case Hidrometro: {
 			this.valor = converterValorHidrometro(leitura.getValor(),
-					(double) ((Hidrometro) equipamento).getPulsosPorLitro());
+					(double) ((Hidrometro) sensor).getPulsosPorLitro());
 			break;
 		}
 		default:
-			throw new IllegalArgumentException("Unexpected value: " + equipamento.getTipoEquipamento());
+			throw new IllegalArgumentException("Unexpected value: " + sensor.getTipoSensor());
 		}
 	}
 

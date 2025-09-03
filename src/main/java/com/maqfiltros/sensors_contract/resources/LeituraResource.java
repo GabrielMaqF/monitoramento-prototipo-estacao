@@ -15,11 +15,11 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.maqfiltros.sensors_contract.dto.leitura.LeituraPorMinutoDTO;
-import com.maqfiltros.sensors_contract.entities.Equipamento;
 import com.maqfiltros.sensors_contract.entities.Leitura;
+import com.maqfiltros.sensors_contract.entities.Sensor;
 import com.maqfiltros.sensors_contract.resources.exceptions.DatabaseException;
-import com.maqfiltros.sensors_contract.services.EquipamentoService;
 import com.maqfiltros.sensors_contract.services.LeituraService;
+import com.maqfiltros.sensors_contract.services.SensorService;
 
 @RestController
 @RequestMapping(value = "/leituras")
@@ -28,10 +28,9 @@ public class LeituraResource {
 	@Autowired
 	private LeituraService service;
 
+	@Autowired
+	private SensorService sensorService;
 
-    @Autowired
-    private EquipamentoService equipamentoService;
-    
 //	@Autowired
 //	private EquipamentoServiceFactory serviceFactory;
 
@@ -50,36 +49,36 @@ public class LeituraResource {
 		return ResponseEntity.ok().body(obj);
 	}
 
-	@GetMapping("/agrupadas/{idEquipamento}/{periodo}/{unidadeTempo}")
-	public List<LeituraPorMinutoDTO> getLeiturasAgrupadasPorMinuto(@PathVariable Long idEquipamento,
+	@GetMapping("/agrupadas/{idSensor}/{periodo}/{unidadeTempo}")
+	public List<LeituraPorMinutoDTO> getLeiturasAgrupadasPorMinuto(@PathVariable Long idSensor,
 			@PathVariable Integer periodo, @PathVariable String unidadeTempo) {
-		return service.obterLeiturasTratadasUltimoPeriodo(idEquipamento, (periodo + " " + unidadeTempo));
+		return service.obterLeiturasTratadasUltimoPeriodo(idSensor, (periodo + " " + unidadeTempo));
 	}
 
-	@GetMapping("/tratadas/{idEquipamento}")
-	public List<LeituraPorMinutoDTO> getLeiturasTratadas(@PathVariable Long idEquipamento) {
-		return service.obterLeiturasTratadas(idEquipamento);
+	@GetMapping("/tratadas/{idSensor}")
+	public List<LeituraPorMinutoDTO> getLeiturasTratadas(@PathVariable Long idSensor) {
+		return service.obterLeiturasTratadas(idSensor);
 	}
 
-	@GetMapping("/dia/{idEquipamento}")
-	public List<LeituraPorMinutoDTO> getLeiturasPorDia(@PathVariable Long idEquipamento,
+	@GetMapping("/dia/{idSensor}")
+	public List<LeituraPorMinutoDTO> getLeiturasPorDia(@PathVariable Long idSensor,
 			@RequestParam("data") String dataBR) {
 
-		return service.obterLeiturasPorPeriodo(idEquipamento, dataBR);
+		return service.obterLeiturasPorPeriodo(idSensor, dataBR);
 	}
 
-	@GetMapping("/periodo/{idEquipamento}")
-	public List<LeituraPorMinutoDTO> getLeiturasPorPeriodo(@PathVariable Long idEquipamento,
+	@GetMapping("/periodo/{idSensor}")
+	public List<LeituraPorMinutoDTO> getLeiturasPorPeriodo(@PathVariable Long idSensor,
 			@RequestParam("dt_inicio") String dtInicio, @RequestParam("dt_fim") String dtFim) {
 
-		return service.obterLeiturasPorPeriodo(idEquipamento, dtInicio, dtFim);
+		return service.obterLeiturasPorPeriodo(idSensor, dtInicio, dtFim);
 	}
 
-	@GetMapping("/mes/{idEquipamento}")
-	public List<LeituraPorMinutoDTO> getLeiturasMes(@PathVariable Long idEquipamento,
+	@GetMapping("/mes/{idSensor}")
+	public List<LeituraPorMinutoDTO> getLeiturasMes(@PathVariable Long idSensor,
 			@RequestParam(value = "tm", required = false, defaultValue = "min") String tm,
 			@RequestParam(value = "mes", required = false) String mes) {
-		return service.obterLeiturasPorMes(idEquipamento, tm, mes);
+		return service.obterLeiturasPorMes(idSensor, tm, mes);
 	}
 
 	@PostMapping(value = "/{id}/{valor}")
@@ -89,10 +88,10 @@ public class LeituraResource {
 //			EquipamentoServiceGeneric<Equipamento, ?> equipamentoService = (EquipamentoServiceGeneric<Equipamento, ?>) serviceFactory
 //					.getService(TipoEquipamento.Hidrometro);
 
-			Equipamento equipamento = equipamentoService.findById(id); // O findById é genérico, então funciona.
+			Sensor sensor = sensorService.findById(id); // O findById é genérico, então funciona.
 
 //			Equipamento equipamento = equipamentoService.findById(id);
-			Leitura obj = new Leitura(null, Instant.now(), valor, equipamento);
+			Leitura obj = new Leitura(null, Instant.now(), valor, sensor);
 
 			obj = service.insert(obj);
 			URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}/" + obj.getId())

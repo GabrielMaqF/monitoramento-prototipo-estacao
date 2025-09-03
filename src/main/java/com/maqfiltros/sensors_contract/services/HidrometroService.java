@@ -3,14 +3,14 @@ package com.maqfiltros.sensors_contract.services;
 import org.springframework.stereotype.Service;
 
 import com.maqfiltros.sensors_contract.entities.Hidrometro;
-import com.maqfiltros.sensors_contract.enums.TipoEquipamento;
+import com.maqfiltros.sensors_contract.enums.TipoSensor;
 import com.maqfiltros.sensors_contract.repositorys.HidrometroRepository;
 import com.maqfiltros.sensors_contract.services.exceptions.ResourceNotFoundException;
-import com.maqfiltros.sensors_contract.services.generic.EquipamentoServiceGeneric;
+import com.maqfiltros.sensors_contract.services.generic.SensorServiceGeneric;
 
 //@Service
 @Service("hidrometroService")
-public class HidrometroService extends EquipamentoServiceGeneric<Hidrometro, HidrometroRepository> {
+public class HidrometroService extends SensorServiceGeneric<Hidrometro, HidrometroRepository> {
 
 	@Override
 	public Hidrometro updateLeitura(Long id, Hidrometro obj) {
@@ -28,7 +28,7 @@ public class HidrometroService extends EquipamentoServiceGeneric<Hidrometro, Hid
 	}
 
 	@Override
-	public TipoEquipamento getTipoEquipamento() {
-		return TipoEquipamento.Hidrometro;
+	public TipoSensor getTipoSensor() {
+		return TipoSensor.Hidrometro;
 	}
 }

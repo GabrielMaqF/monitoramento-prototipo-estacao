@@ -12,14 +12,14 @@ import java.util.Optional;
 import org.springframework.stereotype.Service;
 
 import com.maqfiltros.sensors_contract.dto.leitura.LeituraPorMinutoDTO;
-import com.maqfiltros.sensors_contract.entities.Equipamento;
 //import com.maqfiltros.sensors_contract.entities.Hidrometro;
 import com.maqfiltros.sensors_contract.entities.Leitura;
+import com.maqfiltros.sensors_contract.entities.Sensor;
 import com.maqfiltros.sensors_contract.repositorys.LeituraRepository;
 import com.maqfiltros.sensors_contract.resources.exceptions.DatabaseException;
 import com.maqfiltros.sensors_contract.services.exceptions.InvalidValueException;
-import com.maqfiltros.sensors_contract.services.generic.EquipamentoServiceFactory;
-import com.maqfiltros.sensors_contract.services.generic.EquipamentoServiceGeneric;
+import com.maqfiltros.sensors_contract.services.generic.SensorServiceFactory;
+import com.maqfiltros.sensors_contract.services.generic.SensorServiceGeneric;
 
 @Service
 public class LeituraService {
@@ -32,10 +32,10 @@ public class LeituraService {
 	 */
 
 	private final LeituraRepository repository;
-	private final EquipamentoServiceFactory serviceFactory;
+	private final SensorServiceFactory serviceFactory;
 
 //	@Autowired
-	public LeituraService(LeituraRepository repository, EquipamentoServiceFactory serviceFactory) {
+	public LeituraService(LeituraRepository repository, SensorServiceFactory serviceFactory) {
 		this.repository = repository;
 		this.serviceFactory = serviceFactory;
 	}
@@ -46,7 +46,7 @@ public class LeituraService {
 //	@Autowired
 //	private EquipamentoService equipamentoService;
 
-	public List<LeituraPorMinutoDTO> obterLeiturasPorMes(Long idEquipamento, String tm, String mesParam) {
+	public List<LeituraPorMinutoDTO> obterLeiturasPorMes(Long idSensor, String tm, String mesParam) {
 		// Timezone de São Paulo
 		ZoneId zoneId = ZoneId.of("America/Sao_Paulo");
 
@@ -77,26 +77,26 @@ public class LeituraService {
 		List<LeituraPorMinutoDTO> leituras;
 		if ("dia".equalsIgnoreCase(tm)) {
 //			return repository.buscarLeiturasAgrupadasPorDia(idEquipamento, inicio, fim);
-			leituras = repository.buscarLeiturasAgrupadasPorDia(idEquipamento, inicio, fim);
+			leituras = repository.buscarLeiturasAgrupadasPorDia(idSensor, inicio, fim);
 		} else {
 //			return repository.buscarLeiturasAgrupadasPorMinuto(idEquipamento, inicio, fim);
-			leituras = repository.buscarLeiturasAgrupadasPorMinuto(idEquipamento, inicio, fim);
+			leituras = repository.buscarLeiturasAgrupadasPorMinuto(idSensor, inicio, fim);
 		}
 
 		return leituras;
 	}
 
-	public List<LeituraPorMinutoDTO> obterLeiturasPorPeriodo(Long idEquipamento, String dataBR) {
+	public List<LeituraPorMinutoDTO> obterLeiturasPorPeriodo(Long idSensor, String dataBR) {
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 		LocalDate data = LocalDate.parse(dataBR, formatter);
 
 		Instant inicio = data.atStartOfDay().toInstant(ZoneOffset.UTC);
 		Instant fim = data.plusDays(1).atStartOfDay().toInstant(ZoneOffset.UTC);
 
-		return repository.buscarLeiturasPorDia(idEquipamento, inicio, fim);
+		return repository.buscarLeiturasPorDia(idSensor, inicio, fim);
 	}
 
-	public List<LeituraPorMinutoDTO> obterLeiturasPorPeriodo(Long idEquipamento, String dataInicio, String dataFim) {
+	public List<LeituraPorMinutoDTO> obterLeiturasPorPeriodo(Long idSensor, String dataInicio, String dataFim) {
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 		LocalDate dtInicio = LocalDate.parse(dataInicio, formatter);
 		LocalDate dtFim = LocalDate.parse(dataFim, formatter);
@@ -105,15 +105,15 @@ public class LeituraService {
 		Instant inicio = dtInicio.atStartOfDay(zonaBrasil).toInstant();
 		Instant fim = dtFim.atStartOfDay(zonaBrasil).toInstant();
 
-		return repository.buscarLeiturasPorDia(idEquipamento, inicio, fim);
+		return repository.buscarLeiturasPorDia(idSensor, inicio, fim);
 	}
 
-	public List<LeituraPorMinutoDTO> obterLeiturasTratadasUltimoPeriodo(Long idEquipamento, String periodo) {
-		return repository.buscarLeiturasHidrometroPorIntervalo(idEquipamento, periodo);
+	public List<LeituraPorMinutoDTO> obterLeiturasTratadasUltimoPeriodo(Long idSensor, String periodo) {
+		return repository.buscarLeiturasHidrometroPorIntervalo(idSensor, periodo);
 	}
 
-	public List<LeituraPorMinutoDTO> obterLeiturasTratadas(Long idEquipamento) {
-		return repository.buscarLeiturasTratadas(idEquipamento);
+	public List<LeituraPorMinutoDTO> obterLeiturasTratadas(Long idSensor) {
+		return repository.buscarLeiturasTratadas(idSensor);
 	}
 
 	public List<Leitura> findAll() {
@@ -125,7 +125,7 @@ public class LeituraService {
 		return obj.get();
 	}
 
-	public Leitura findByIdEquipamento(Long id) {
+	public Leitura findByIdSensor(Long id) {
 		Optional<Leitura> obj = repository.findById(id);
 		return obj.get();
 	}
@@ -135,17 +135,17 @@ public class LeituraService {
 //			boolean persistir = false;
 //			persistir = obj.getEquipamento().leituraRecebida(obj.getValor());
 
-			Equipamento equipamento = obj.getEquipamento();
-			boolean persistir = equipamento.leituraRecebida(obj.getValor());
+			Sensor sensor = obj.getSensor();
+			boolean persistir = sensor.leituraRecebida(obj.getValor());
 
 			if (persistir) {
 				// 1. Usa o Factory para obter o serviço correto (HidrometroService ou
 				// SensorNivelService)
-				EquipamentoServiceGeneric<Equipamento, ?> service = (EquipamentoServiceGeneric<Equipamento, ?>) serviceFactory
-						.getService(equipamento.getTipoEquipamento());
+				SensorServiceGeneric<Sensor, ?> service = (SensorServiceGeneric<Sensor, ?>) serviceFactory
+						.getService(sensor.getTipoSensor());
 
 				// 2. Chama o método de atualização no serviço específico que foi encontrado
-				service.updateLeitura(equipamento.getId(), equipamento);
+				service.updateLeitura(sensor.getId(), sensor);
 
 				// 3. Salva a leitura no banco de dados
 				return repository.save(obj);
