@@ -82,7 +82,7 @@ public class LeituraResource {
 	}
 
 	@PostMapping(value = "/{id}/{valor}")
-	public ResponseEntity<Leitura> insert(@PathVariable Long id, @PathVariable String valor) {
+	public ResponseEntity<Leitura> insert(@PathVariable String id, @PathVariable String valor) {
 		try {
 //			@SuppressWarnings("unchecked")
 //			EquipamentoServiceGeneric<Equipamento, ?> equipamentoService = (EquipamentoServiceGeneric<Equipamento, ?>) serviceFactory

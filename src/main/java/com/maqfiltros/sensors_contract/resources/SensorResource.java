@@ -24,7 +24,7 @@ public class SensorResource {
 	}
 
 	@GetMapping("/escola/com-leituras/{escolaId}")
-	public ResponseEntity<?> listarPorEscolaComOpcionalELeituras(@PathVariable Long escolaId,
+	public ResponseEntity<?> listarPorEscolaComOpcionalELeituras(@PathVariable String escolaId,
 			@RequestParam(value = "tm", required = false) String tm) {
 		List<Sensor> sensores = sensorService.buscarPorEscola(escolaId);
 		List<SensorDTO> resultado = sensores.stream().map(e -> new SensorDTO(e, tm, true)).toList();
@@ -32,7 +32,7 @@ public class SensorResource {
 	}
 
 	@GetMapping("/escola/{escolaId}")
-	public ResponseEntity<?> listarPorEscola(@PathVariable Long escolaId) {
+	public ResponseEntity<?> listarPorEscola(@PathVariable String escolaId) {
 		List<Sensor> sensores = sensorService.buscarPorEscola(escolaId);
 		List<SensorDTO> resultado = sensores.stream().map(e -> new SensorDTO(e)).toList();
 		return ResponseEntity.ok(resultado);

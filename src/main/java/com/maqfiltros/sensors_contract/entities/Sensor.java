@@ -11,8 +11,6 @@ import jakarta.persistence.DiscriminatorColumn;
 import jakarta.persistence.DiscriminatorType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Inheritance;
 import jakarta.persistence.InheritanceType;
@@ -39,8 +37,8 @@ public abstract class Sensor implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+//	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private String id;
 	private String descricao;
 
 //	@JsonIgnore
@@ -52,7 +50,7 @@ public abstract class Sensor implements Serializable {
 	@ManyToOne(fetch = FetchType.LAZY) // Usar LAZY é uma boa prática de performance
 	@JoinColumn(name = "equipamento_id")
 	private Equipamento equipamento;
-	
+
 	@OneToMany(mappedBy = "sensor") // , cascade = CascadeType.ALL
 	@OrderBy("moment ASC")
 	private List<Leitura> leituras;
@@ -74,7 +72,7 @@ public abstract class Sensor implements Serializable {
 //		this.descricao = descricao;
 //		this.escola = escola;
 //	}
-	protected Sensor(Long id, String descricao, Equipamento equipamento) {// , Escola escola
+	protected Sensor(String id, String descricao, Equipamento equipamento) {// , Escola escola
 //		super();
 		this.id = id;
 		this.descricao = descricao;
@@ -82,6 +80,7 @@ public abstract class Sensor implements Serializable {
 //		this.escola = escola;
 	}
 
+	@JsonIgnore
 	public abstract TipoSensor getTipoSensor();
 
 	public abstract String getUnidadeMedida();

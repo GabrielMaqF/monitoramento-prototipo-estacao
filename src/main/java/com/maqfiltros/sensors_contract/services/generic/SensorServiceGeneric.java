@@ -31,7 +31,7 @@ public abstract class SensorServiceGeneric<T extends Sensor, R extends SensorRep
 		return repository.findByEquipamentoId(equipamentoId);
 	}
 
-	public T findById(Long id) {
+	public T findById(String id) {
 		return repository.findById(id)
 				.orElseThrow(() -> new ResourceNotFoundException("Equipamento não encontrado com ID: " + id));
 	}
@@ -40,7 +40,7 @@ public abstract class SensorServiceGeneric<T extends Sensor, R extends SensorRep
 		return repository.save(obj);
 	}
 
-	public void delete(Long id) {
+	public void delete(String id) {
 		try {
 			repository.deleteById(id);
 		} catch (EmptyResultDataAccessException e) {
@@ -58,7 +58,7 @@ public abstract class SensorServiceGeneric<T extends Sensor, R extends SensorRep
 		return repository.findResumoSensores();
 	}
 
-	public T update(Long id, T obj) {
+	public T update(String id, T obj) {
 		T entity = repository.findById(id).orElseThrow(() -> new ResourceNotFoundException(id));
 		updateData(entity, obj);
 		return repository.save(entity);
@@ -68,7 +68,7 @@ public abstract class SensorServiceGeneric<T extends Sensor, R extends SensorRep
 	// atualização de leitura
 	public abstract TipoSensor getTipoSensor();
 
-	public abstract T updateLeitura(Long id, T obj);
+	public abstract T updateLeitura(String id, T obj);
 
 	protected abstract void updateData(T entity, T obj);
 }

@@ -41,7 +41,7 @@ public abstract class SensorResourceGeneric<T extends Sensor> {
 	}
 
 	@GetMapping(value = "/{id}")
-	public ResponseEntity<T> findById(@PathVariable Long id) {
+	public ResponseEntity<T> findById(@PathVariable String id) {
 		T obj = getService().findById(id);
 		return ResponseEntity.ok().body(obj);
 	}
@@ -61,13 +61,13 @@ public abstract class SensorResourceGeneric<T extends Sensor> {
 	}
 
 	@DeleteMapping(value = "/{id}")
-	public ResponseEntity<Void> delete(@PathVariable Long id) {
+	public ResponseEntity<Void> delete(@PathVariable String id) {
 		getService().delete(id);
 		return ResponseEntity.noContent().build();
 	}
 
 	@PutMapping(value = "/{id}")
-	public ResponseEntity<T> update(@PathVariable Long id, @RequestBody T obj) {
+	public ResponseEntity<T> update(@PathVariable String id, @RequestBody T obj) {
 		// Primeiro, obtemos o tipo do equipamento a partir do objeto recebido
 		TipoSensor tipo = obj.getTipoSensor();
 

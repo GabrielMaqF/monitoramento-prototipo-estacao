@@ -18,16 +18,16 @@ public class SensorService {
 		this.sensorRepository = sensorRepository;
 	}
 
-	public List<Sensor> buscarPorEscola(Long equipamentoId) {
+	public List<Sensor> buscarPorEscola(String equipamentoId) {
 		return sensorRepository.findByEquipamentoId(equipamentoId);
 	}
 
-	public Sensor findByIdComLeituras(Long id) {
+	public Sensor findByIdComLeituras(String id) {
 		return sensorRepository.findByIdComLeituras(id)
 				.orElseThrow(() -> new ResourceNotFoundException("Sensor não encontrado"));
 	}
 
-	public Sensor findById(Long id) {
+	public Sensor findById(String id) {
 		return sensorRepository.findById(id)
 				.orElseThrow(() -> new ResourceNotFoundException("Sensor não encontrado com ID: " + id));
 	}

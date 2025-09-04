@@ -13,7 +13,7 @@ import com.maqfiltros.sensors_contract.services.generic.SensorServiceGeneric;
 public class SensorNivelService extends SensorServiceGeneric<SensorNivel, SensorNivelRepository> {
 
 	@Override
-	public SensorNivel updateLeitura(Long id, SensorNivel obj) {
+	public SensorNivel updateLeitura(String id, SensorNivel obj) {
 		SensorNivel entity = repository.findById(id).orElseThrow(() -> new ResourceNotFoundException(id));
 //		entity.setQntTotalLitros(obj.getQntProduzida());
 		return repository.save(entity);
