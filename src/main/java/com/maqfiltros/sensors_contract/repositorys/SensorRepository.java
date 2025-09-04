@@ -13,7 +13,7 @@ import com.maqfiltros.sensors_contract.interfaces.consultas.SensorResumido;
 
 @Repository
 public interface SensorRepository extends JpaRepository<Sensor, Long> {
-	List<Sensor> findByEscolaId(Long escolaId);
+	List<Sensor> findByEquipamentoId(Long equipamentoId);
 
 	@Query("SELECT s FROM Sensor s LEFT JOIN FETCH s.leituras WHERE s.id = :id")
 	Optional<Sensor> findByIdComLeituras(@Param("id") Long id);
