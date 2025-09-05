@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.maqfiltros.sensors_contract.adapter.dto.LeituraSwimpDTO;
-import com.maqfiltros.sensors_contract.adapter.services.LeituraAdapterService;
+import com.maqfiltros.sensors_contract.adapter.services.SwimpAdapterService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -16,7 +16,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class LeituraAdapterResource {
 
-	private final LeituraAdapterService service;
+	private final SwimpAdapterService service;
 
 	@PostMapping("/leituras")
 	public ResponseEntity<Void> inserirLeiturasSwimp(@RequestBody LeituraSwimpDTO dto) {

@@ -1,5 +1,8 @@
 package com.maqfiltros.sensors_contract.config;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
@@ -18,10 +21,15 @@ public class TestConfig implements CommandLineRunner{
 //		System.out.println("UID 16: " + UidGenerator.generate(16));
 //		System.out.println("UID 32: " + UidGenerator.generate(32));
 		
+		List<Integer> l = new ArrayList<>();
+		System.out.println("LISTA: " + l.size());
+		
 		for (int i = 0; i < 100; i++) {
 			int x = (int) (100 * Math.random());
 			x = x < 0 ? x * -1 : x;
-			System.out.println("UID " + x + ": " + UidGenerator.generate(x));
+			if(x > 0) {
+				System.out.println("UID " + x + ": " + UidGenerator.generate(x));
+			}
 		}
 //		Escola c1 = new Escola(null, "Gabriel Sales", "Rua Marechal Andrea");
 //		Hidrometro e3 = new Hidrometro((byte) 1, "HIDROMETER UJH2,5 DN2 - B22H018066", "Hidrometro de Testes", c1, 233);

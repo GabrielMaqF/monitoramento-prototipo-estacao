@@ -14,7 +14,8 @@ public class RelacaoDadosSwimp {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	
-	private Long idEscola, idEquipamento;
+	private Long idEscola;
+	private Integer idEquipamento;
 	private String idSensor, idDispositivo, idSwimp;
 	
 	public void setIdSwimp() {
