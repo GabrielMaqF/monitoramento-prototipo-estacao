@@ -7,10 +7,13 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.maqfiltros.sensors_contract.enums.TipoSensor;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.DiscriminatorColumn;
 import jakarta.persistence.DiscriminatorType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Inheritance;
 import jakarta.persistence.InheritanceType;
@@ -37,15 +40,18 @@ public abstract class Sensor implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-//	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private String id;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
 	private String descricao;
 
 //	@JsonIgnore
 //	@ManyToOne
 //	@JoinColumn(name = "escola_id")
 //	public Escola escola;
-
+	
+	@Column(unique = true)
+	private String codigoExterno;
+	
 	@JsonIgnore
 	@ManyToOne(fetch = FetchType.LAZY) // Usar LAZY é uma boa prática de performance
 	@JoinColumn(name = "equipamento_id")
@@ -72,7 +78,7 @@ public abstract class Sensor implements Serializable {
 //		this.descricao = descricao;
 //		this.escola = escola;
 //	}
-	protected Sensor(String id, String descricao, Equipamento equipamento) {// , Escola escola
+	protected Sensor(Long id, String descricao, Equipamento equipamento) {// , Escola escola
 //		super();
 		this.id = id;
 		this.descricao = descricao;

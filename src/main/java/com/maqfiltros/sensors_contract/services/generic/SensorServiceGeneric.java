@@ -10,18 +10,23 @@ import org.springframework.dao.EmptyResultDataAccessException;
 //import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
+import com.maqfiltros.sensors_contract.adapter.services.SwimpAdapterService;
 import com.maqfiltros.sensors_contract.entities.Sensor;
 import com.maqfiltros.sensors_contract.enums.TipoSensor;
 import com.maqfiltros.sensors_contract.interfaces.consultas.SensorResumido;
 import com.maqfiltros.sensors_contract.repositorys.generic.SensorRepositoryGeneric;
 import com.maqfiltros.sensors_contract.resources.exceptions.DatabaseException;
 import com.maqfiltros.sensors_contract.services.exceptions.ResourceNotFoundException;
+import com.maqfiltros.sensors_contract.utils.UidGenerator;
 
 @Service
 public abstract class SensorServiceGeneric<T extends Sensor, R extends SensorRepositoryGeneric<T>> {
 
 	@Autowired
 	protected R repository;
+	
+	@Autowired
+	private SwimpAdapterService swimpAdapterService;
 
 	public List<T> findAll() {
 		return repository.findAll();
@@ -31,16 +36,18 @@ public abstract class SensorServiceGeneric<T extends Sensor, R extends SensorRep
 		return repository.findByEquipamentoId(equipamentoId);
 	}
 
-	public T findById(String id) {
+	public T findById(Long id) {
 		return repository.findById(id)
 				.orElseThrow(() -> new ResourceNotFoundException("Equipamento não encontrado com ID: " + id));
 	}
 
 	public T insert(T obj) {
+		obj.setCodigoExterno(UidGenerator.generate(16));
+		swimpAdapterService.insertSensor(obj);
 		return repository.save(obj);
 	}
 
-	public void delete(String id) {
+	public void delete(Long id) {
 		try {
 			repository.deleteById(id);
 		} catch (EmptyResultDataAccessException e) {
@@ -58,7 +65,7 @@ public abstract class SensorServiceGeneric<T extends Sensor, R extends SensorRep
 		return repository.findResumoSensores();
 	}
 
-	public T update(String id, T obj) {
+	public T update(Long id, T obj) {
 		T entity = repository.findById(id).orElseThrow(() -> new ResourceNotFoundException(id));
 		updateData(entity, obj);
 		return repository.save(entity);
@@ -68,7 +75,7 @@ public abstract class SensorServiceGeneric<T extends Sensor, R extends SensorRep
 	// atualização de leitura
 	public abstract TipoSensor getTipoSensor();
 
-	public abstract T updateLeitura(String id, T obj);
+	public abstract T updateLeitura(Long id, T obj);
 
 	protected abstract void updateData(T entity, T obj);
 }

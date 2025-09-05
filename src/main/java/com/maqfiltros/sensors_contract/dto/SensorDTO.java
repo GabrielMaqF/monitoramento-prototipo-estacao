@@ -17,7 +17,7 @@ import com.maqfiltros.sensors_contract.resources.exceptions.DatabaseException;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class SensorDTO {
-	private String id;
+	private Long id;
 	private String descricao;
 	private TipoSensor tipo;
 	private List<LeituraDTO> leituras;
@@ -165,11 +165,11 @@ public class SensorDTO {
 		this.tipo = tipo;
 	}
 
-	public String getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(String id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 

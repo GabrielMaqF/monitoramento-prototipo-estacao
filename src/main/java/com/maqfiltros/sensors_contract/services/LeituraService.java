@@ -138,7 +138,7 @@ public class LeituraService {
 			Sensor sensor = obj.getSensor();
 			boolean persistir = sensor.leituraRecebida(obj.getValor());
 
-			if (persistir) {
+//			if (persistir) {
 				// 1. Usa o Factory para obter o serviço correto (HidrometroService ou
 				// SensorNivelService)
 				SensorServiceGeneric<Sensor, ?> service = (SensorServiceGeneric<Sensor, ?>) serviceFactory
@@ -155,13 +155,13 @@ public class LeituraService {
 ////				acompanhamento.verificarLeituraContinua(equipamentoCompleto);
 //
 //				return repository.save(obj);
-			}
+//			}
 		} catch (NumberFormatException e) {
 			throw new InvalidValueException(obj.getValor());
 		} catch (Exception e) {
 			throw new DatabaseException(e.getMessage());
 		}
-		return obj;
+//		return obj;
 	}
 
 }

@@ -13,7 +13,7 @@ import com.maqfiltros.sensors_contract.services.generic.SensorServiceGeneric;
 public class HidrometroService extends SensorServiceGeneric<Hidrometro, HidrometroRepository> {
 
 	@Override
-	public Hidrometro updateLeitura(String id, Hidrometro obj) {
+	public Hidrometro updateLeitura(Long id, Hidrometro obj) {
 		Hidrometro entity = repository.findById(id).orElseThrow(() -> new ResourceNotFoundException(id));
 		entity.setQntTotalLitros(obj.getQntProduzida());
 		return repository.save(entity);

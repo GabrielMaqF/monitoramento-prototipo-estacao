@@ -8,7 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 import com.maqfiltros.sensors_contract.entities.Sensor;
 import com.maqfiltros.sensors_contract.interfaces.consultas.SensorResumido;
 
-public interface SensorRepositoryGeneric<T extends Sensor> extends JpaRepository<T, String> {
+public interface SensorRepositoryGeneric<T extends Sensor> extends JpaRepository<T, Long> {
 	List<T> findByEquipamentoId(Long clienteId);
 
 	@Query("SELECT s FROM Sensor s")

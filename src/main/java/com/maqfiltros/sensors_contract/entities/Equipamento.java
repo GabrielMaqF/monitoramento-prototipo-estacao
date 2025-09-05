@@ -1,5 +1,7 @@
 package com.maqfiltros.sensors_contract.entities;
 
+import java.util.List;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.maqfiltros.sensors_contract.enums.TipoEquipamento;
 
@@ -36,5 +38,5 @@ public class Equipamento {
 	private Escola escola;
 
 	@OneToMany(mappedBy = "equipamento", cascade = CascadeType.ALL, orphanRemoval = true)
-	private Sensor sensores;
+	private List<Sensor> sensores;
 }

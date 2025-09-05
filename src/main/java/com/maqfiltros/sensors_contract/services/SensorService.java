@@ -22,12 +22,12 @@ public class SensorService {
 		return sensorRepository.findByEquipamentoId(equipamentoId);
 	}
 
-	public Sensor findByIdComLeituras(String id) {
+	public Sensor findByIdComLeituras(Long id) {
 		return sensorRepository.findByIdComLeituras(id)
 				.orElseThrow(() -> new ResourceNotFoundException("Sensor não encontrado"));
 	}
 
-	public Sensor findById(String id) {
+	public Sensor findById(Long id) {
 		return sensorRepository.findById(id)
 				.orElseThrow(() -> new ResourceNotFoundException("Sensor não encontrado com ID: " + id));
 	}
@@ -38,5 +38,9 @@ public class SensorService {
 
 	public List<SensorResumido> findSensorResumido() {
 		return sensorRepository.findResumoSensores();
+	}
+	
+	public Sensor findByCodigoExterno(String codigoExterno) {
+		return sensorRepository.findByCodigoExterno(codigoExterno);
 	}
 }
