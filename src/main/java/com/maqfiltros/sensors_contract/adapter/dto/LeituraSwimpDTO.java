@@ -1,4 +1,4 @@
-package com.maqfiltros.sensors_contract.dto.leitura;
+package com.maqfiltros.sensors_contract.adapter.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 

@@ -53,6 +53,11 @@ public abstract class SensorResourceGeneric<T extends Sensor> {
 		SensorServiceGeneric<T, ?> service = (SensorServiceGeneric<T, ?>) serviceFactory.getService(tipo);
 
 		Equipamento equipamento = equipamentoService.findById(id_equipamento);
+		
+		long proximoIdSequencial = (equipamento.getSensores() != null) ? equipamento.getSensores().size() + 1 : 1;
+		String idComposto = id_equipamento + "_" + proximoIdSequencial;
+		obj.setId(idComposto);
+		
 		obj.setEquipamento(equipamento);
 
 		obj = service.insert(obj);

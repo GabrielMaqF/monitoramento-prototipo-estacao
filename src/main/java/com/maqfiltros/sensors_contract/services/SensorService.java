@@ -18,7 +18,7 @@ public class SensorService {
 		this.sensorRepository = sensorRepository;
 	}
 
-	public List<Sensor> buscarPorEscola(String equipamentoId) {
+	public List<Sensor> buscarPorEscola(Long equipamentoId) {
 		return sensorRepository.findByEquipamentoId(equipamentoId);
 	}
 

@@ -102,4 +102,5 @@ public class LeituraResource {
 			throw new DatabaseException(e.getMessage());
 		}
 	}
+	
 }

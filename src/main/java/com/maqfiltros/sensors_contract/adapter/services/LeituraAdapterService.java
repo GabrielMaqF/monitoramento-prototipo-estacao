@@ -1,32 +1,30 @@
-package com.maqfiltros.sensors_contract.adapter.service;
+package com.maqfiltros.sensors_contract.adapter.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
 
-import com.maqfiltros.sensors_contract.adapter.LeituraAdapter;
-import com.maqfiltros.sensors_contract.dto.leitura.LeituraSwimpDTO;
+import com.maqfiltros.sensors_contract.adapter.dto.LeituraSwimpDTO;
 import com.maqfiltros.sensors_contract.entities.Leitura;
 import com.maqfiltros.sensors_contract.services.LeituraService;
 import com.maqfiltros.sensors_contract.services.SensorService;
 
-@Component
-public class LeituraSwimpAdapter implements LeituraAdapter<LeituraSwimpDTO> {
-    
+@Service
+public class LeituraAdapterService {
+
 	@Autowired
 	private LeituraService service;
-	
+
 	@Autowired
 	private SensorService sensorService;
 
-	@Override
-	public Leitura adapter(LeituraSwimpDTO dto) {
+	public ResponseEntity<Void> inserirLeiturasSwimp(LeituraSwimpDTO dto) {
 		Leitura l = new Leitura();
 		
 		String idSensor = dto.getDeviceId() + "_" + dto.getRecursoMonitoradoId();
 		sensorService.findById(idSensor);
 		
-		
-		
+
 		return null;
 	}
 
