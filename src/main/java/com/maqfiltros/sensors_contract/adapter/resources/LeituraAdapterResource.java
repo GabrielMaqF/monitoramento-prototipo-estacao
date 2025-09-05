@@ -1,12 +1,16 @@
 package com.maqfiltros.sensors_contract.adapter.resources;
 
+import java.util.List;
+
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.maqfiltros.sensors_contract.adapter.dto.LeituraSwimpDTO;
+import com.maqfiltros.sensors_contract.adapter.entities.RelacaoDadosSwimp;
 import com.maqfiltros.sensors_contract.adapter.services.SwimpAdapterService;
 
 import lombok.RequiredArgsConstructor;
@@ -18,6 +22,11 @@ public class LeituraAdapterResource {
 
 	private final SwimpAdapterService service;
 
+	@GetMapping("/leituras")
+	public List<RelacaoDadosSwimp> findAll(){
+		return service.findAll();
+	}
+	
 	@PostMapping("/leituras")
 	public ResponseEntity<Void> inserirLeiturasSwimp(@RequestBody LeituraSwimpDTO dto) {
 		return service.inserirLeiturasSwimp(dto);

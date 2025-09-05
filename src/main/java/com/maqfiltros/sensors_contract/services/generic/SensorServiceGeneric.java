@@ -5,6 +5,7 @@ import java.util.List;
 
 //import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 //import org.springframework.data.jpa.repository.JpaRepository;
@@ -25,6 +26,7 @@ public abstract class SensorServiceGeneric<T extends Sensor, R extends SensorRep
 	@Autowired
 	protected R repository;
 	
+	@Lazy
 	@Autowired
 	private SwimpAdapterService swimpAdapterService;
 

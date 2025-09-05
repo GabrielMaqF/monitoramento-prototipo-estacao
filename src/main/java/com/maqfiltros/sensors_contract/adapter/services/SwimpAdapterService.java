@@ -3,7 +3,6 @@ package com.maqfiltros.sensors_contract.adapter.services;
 import java.time.Instant;
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -18,32 +17,29 @@ import com.maqfiltros.sensors_contract.services.LeituraService;
 import com.maqfiltros.sensors_contract.services.SensorService;
 import com.maqfiltros.sensors_contract.utils.UidGenerator;
 
+import lombok.RequiredArgsConstructor;
+
 @Service
+@RequiredArgsConstructor
 public class SwimpAdapterService {
 
-	@Autowired
-	private RelacaoDadosSwimpRepository repository;
-
-	@Autowired
-	private LeituraService leituraService;
+	private final RelacaoDadosSwimpRepository repository;
+	private final LeituraService leituraService;
+	private final SensorService sensorService;
 
 //	@Autowired
-//	private EscolaService escolaService;
-
-	@Autowired
-	private SensorService sensorService;
-
-//	public void insert(Escola e) {
-//		List<RelacaoDadosSwimp> l = repository.findByIdEscola(e.getId());
+//	private RelacaoDadosSwimpRepository repository;
 //
-//		if (l.isEmpty()) {
-//			RelacaoDadosSwimp rds = new RelacaoDadosSwimp();
-//			rds.setIdEscola(e.getId());
+//	@Autowired
+//	private LeituraService leituraService;
 //
-//			repository.save(rds);
-//		}
-//	}
-
+//	@Autowired
+//	private SensorService sensorService;
+	
+	public List<RelacaoDadosSwimp> findAll(){
+		return repository.findAll();
+	}
+	
 	public void insertSensor(Sensor sensor) {
 		Equipamento equipamento = sensor.getEquipamento();
 		Escola escola = equipamento.getEscola();
@@ -74,9 +70,9 @@ public class SwimpAdapterService {
 		l.setSensor(sensor);
 		l.setValor((String.valueOf(dto.getMedicaoCorrente())));
 		l.setMoment(Instant.ofEpochSecond(dto.getTimestampMedicao()));
-		
+
 		leituraService.insert(l);
-		
+
 		return null;
 	}
 
